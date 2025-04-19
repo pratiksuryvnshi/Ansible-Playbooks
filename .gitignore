@@ -1,10 +1,2 @@
-.ansible 
-.bash_history  
-.bash_logout  
-.bashrc  
-.cache  
-.git  
-.local  
-.profile  
-.ssh  
-.sudo_as_admin_successful
+.git
+.ssh
