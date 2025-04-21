@@ -1,0 +1,24 @@
+---
+- name: Install NGINX Server
+  hosts: test
+  become: true
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+      when: ansible_os_family == "Debian"
+#copy custom web page
+    - name: Copy custom index.html
+      copy: 
+        src: files/index.html
+        dest: /var/www/html/index.html
+        mode: 0644
+#start the nginx services
+    - name: Ensure that nginx is runnig and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+
