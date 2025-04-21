@@ -1,0 +1,29 @@
+---
+- name: Manage user and SSH keys
+  hosts: test
+  become: true
+
+  tasks:
+    - name: Create users and deploy SSH keys
+      user:
+        name: "{{ item.name }}"
+        groups: "{{ 'sudo' if item.sudo else omit }}"
+        append: yes
+        shell: /bin/bash
+      loop:
+        - { name: 'alice', sudo: true }
+        - { name: 'bob', sudo: false }
+
+    - name: Deploy SSH Key
+      ansible.posix.authorized_key:
+        user: "{{ item.name }}"
+        key: "{{ lookup('file', 'files/users_ssh_keys/' + item.name + '.pub') }}"
+        state: present
+      loop:
+        - { name: 'alice' }
+        - { name: 'bob' }
+
+
+
+
+
