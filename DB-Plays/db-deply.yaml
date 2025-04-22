@@ -1,0 +1,43 @@
+---
+- name: Backup MySql database
+  hosts: test
+  become: true
+
+  tasks:
+    - name: Install SQL server
+      apt:
+        name: "{{ 'mysql-client' if ansible_os_family == 'Debian' else 'mysql' }}"
+        state: present
+
+    - name: Create Backup directory
+      file:
+        path: /backups/mysql
+        state: directory
+        mode: 0755
+        recurse: yes  # Creates parent directories if needed
+
+    - name: Dump and compass all database
+      shell: > 
+        mysqldump -h {{ db_host }} -u {{ db_user }} -p{{ db_password }} --all-databases   \   
+        | gzip > /backups/mysql/db_backup-{{ ansible_date_time.iso8601 }}.sql.gz
+      args:
+        executable: /bin/bash
+      no_log: true  # Hides password from logs 
+      vars:
+       db_host: "db01.example.com"
+       db_user: "backup_user"
+       db_password: "secure_password"
+
+    - name: Clean up old backups (keep last 5)
+      find: 
+        paths: /backups/mysql
+        pattern: "db_backup-*.sql.gz"
+        age: "7d"
+      register: old_backups
+
+    - name: Remove old backup
+      file:
+        path: "{{ item.path }"
+        state: absent
+      loop: "{{ old_backups.files }}"
+      when: old_backups.matched > 5

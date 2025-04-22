@@ -1,0 +1,13 @@
+---
+- name: Deploy NGINX container
+  hosts: test
+  become: true
+  tasks:
+    - name: Deploy nginx on docker
+      docker_container:
+        name: my_nginx
+        image: nginx:latest
+        ports: 
+          - "8080:80"
+        state: started
+

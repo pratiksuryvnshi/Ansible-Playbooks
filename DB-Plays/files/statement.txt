@@ -1,0 +1,8 @@
+Problem:
+Create a playbook to:
+
+Install mysql-client on backup_servers.
+
+Dump all MySQL databases from db_servers to /backups/mysql/ daily.
+
+Compress backups and retain only the last 5 backups.
