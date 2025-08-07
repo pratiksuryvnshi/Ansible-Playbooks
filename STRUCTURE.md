@@ -1,5 +1,5 @@
-# 📁 Project Directory Structure
-
+# 📁 Project Structure
+```
 .
 ├── DB-Plays
 │   ├── db-deply.yaml
@@ -16,3 +16,4 @@
 ├── STRUCTURE.md
 └── USER-SSH
     └── user-ssh.yaml
+```
