@@ -12,8 +12,6 @@
 │   ├── deply-nginx.yaml
 │   └── files
 │       └── index.html
-├── README.md
-├── STRUCTURE.md
 └── USER-SSH
     └── user-ssh.yaml
 ```
