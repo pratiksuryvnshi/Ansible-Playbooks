@@ -16,8 +16,10 @@ jobs:
 
       - name: Generate directory tree
         run: |
-          tree -L 3 -I "node_modules|.git|.venv|__pycache__" --noreport > STRUCTURE.md
-          sed -i '1i# 📁 Project Directory Structure\n' STRUCTURE.md
+          echo '# 📁 Project Structure' > STRUCTURE.md
+          echo '```' >> STRUCTURE.md
+          tree -L 3 -I ".git|node_modules|.venv|__pycache__" --noreport >> STRUCTURE.md
+          echo '```' >> STRUCTURE.md
 
       - name: Commit and push STRUCTURE.md
         run: |
