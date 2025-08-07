@@ -1,4 +1,4 @@
-name: Generate STRUCTURE.md
+name: Generate Tree Folder
 
 on:
   workflow_dispatch:         # Allows manual trigger from GitHub UI
